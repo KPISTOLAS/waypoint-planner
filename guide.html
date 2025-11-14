@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waypoint Planner - User Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(to bottom, #f8f9fa, #f0f2f5);
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin: 30px auto;
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #4a90e2;
+        }
+
+        h3 {
+            color: #4a90e2;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        h4 {
+            color: #555;
+            font-size: 1.1em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .feature-box {
+            background: linear-gradient(to right, #f8f9ff, #f0f4ff);
+            border-left: 4px solid #4a90e2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .feature-box h4 {
+            color: #4a90e2;
+            margin-top: 0;
+        }
+
+        .tip-box {
+            background: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .tip-box::before {
+            content: "💡 Tip: ";
+            font-weight: 600;
+            color: #f57c00;
+        }
+
+        .warning-box {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .warning-box::before {
+            content: "⚠️ Warning: ";
+            font-weight: 600;
+            color: #c62828;
+        }
+
+        code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #d63384;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .step {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            transition: all 0.2s;
+        }
+
+        .step:hover {
+            border-color: #4a90e2;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.15);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: 700;
+            margin-right: 12px;
+        }
+
+        .table-of-contents {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .table-of-contents h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .table-of-contents ul {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .table-of-contents li {
+            margin: 10px 0;
+        }
+
+        .table-of-contents a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .table-of-contents a:hover {
+            color: #357abd;
+            text-decoration: underline;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin: 15px 0;
+        }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .preset-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .preset-card h4 {
+            color: #4a90e2;
+            margin-top: 0;
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🚁 Waypoint Planner</h1>
+        <p>Complete User Guide - DJI Drone Flight Planning Application</p>
+    </header>
+
+    <div class="container">
+        <div class="content">
+            <div class="table-of-contents">
+                <h3>📑 Table of Contents</h3>
+                <ul>
+                    <li><a href="#introduction">1. Introduction</a></li>
+                    <li><a href="#getting-started">2. Getting Started</a></li>
+                    <li><a href="#basic-features">3. Basic Features</a></li>
+                    <li><a href="#advanced-features">4. Advanced Features</a></li>
+                    <li><a href="#presets">5. Flight Presets</a></li>
+                    <li><a href="#drawing-tools">6. Drawing Tools</a></li>
+                    <li><a href="#import-export">7. Import & Export</a></li>
+                    <li><a href="#tips">8. Tips & Best Practices</a></li>
+                    <li><a href="#faq">9. FAQ</a></li>
+                </ul>
+            </div>
+
+            <section id="introduction">
+                <h2>1. Introduction</h2>
+                <p>Welcome to <strong>Waypoint Planner</strong>, a professional desktop application for creating and managing automated flight plans for DJI drones. This application is designed for photogrammetry, 3D mapping, inspection, and other advanced drone operations.</p>
+                
+                <div class="feature-box">
+                    <h4>Key Capabilities</h4>
+                    <ul>
+                        <li>Create precise waypoint-based flight plans</li>
+                        <li>Generate automated flight paths from polygons and areas</li>
+                        <li>Import/export flight plans in multiple formats (JSON, KMZ, KML, WGS84)</li>
+                        <li>Configure advanced flight parameters for professional missions</li>
+                        <li>Support for multiple DJI drone models</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="getting-started">
+                <h2>2. Getting Started</h2>
+                
+                <h3>Installation</h3>
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Download the Application</strong>
+                    <p>Download the latest release for your operating system (Windows, macOS, or Linux).</p>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Install and Launch</strong>
+                    <p>Install the application and launch it. The application will automatically create a new flight plan when you start.</p>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Select Your Drone Model</strong>
+                    <p>In the Flight Settings panel, select your DJI drone model from the dropdown menu at the top.</p>
+                </div>
+
+                <h3>Interface Overview</h3>
+                <p>The application consists of three main areas:</p>
+                <ul>
+                    <li><strong>Toolbar</strong> (top): File operations, import/export, and mission splitting</li>
+                    <li><strong>Left Panel</strong>: Flight settings, presets, and waypoint management</li>
+                    <li><strong>Map View</strong> (center): Interactive map for visualizing and creating flight plans</li>
+                </ul>
+            </section>
+
+            <section id="basic-features">
+                <h2>3. Basic Features</h2>
+
+                <h3>Creating Waypoints</h3>
+                <p>There are several ways to add waypoints to your flight plan:</p>
+
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Click on Map</strong>
+                    <p>Select the <strong>"Waypoints"</strong> mode in the Drawing Tools (top-right), then click anywhere on the map to add a waypoint at that location.</p>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Add Button</strong>
+                    <p>Click the <strong>"+"</strong> button in the Waypoints panel header to add a waypoint at coordinates (0, 0). You can then edit its coordinates manually.</p>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Edit Coordinates</strong>
+                    <p>Select a waypoint from the list and edit its latitude, longitude, altitude, speed, and other parameters in the editor panel.</p>
+                </div>
+
+                <h3>Editing Waypoints</h3>
+                <ul>
+                    <li><strong>Select a waypoint</strong>: Click on a waypoint in the list or on the map</li>
+                    <li><strong>Edit properties</strong>: Modify latitude, longitude, altitude, speed, gimbal angle, and heading</li>
+                    <li><strong>Move waypoints</strong>: Right-click and drag a waypoint on the map to reposition it</li>
+                    <li><strong>Delete waypoints</strong>: Select a waypoint and press <code>Delete</code> or <code>Backspace</code>, or click the trash icon</li>
+                </ul>
+
+                <div class="tip-box">
+                    Waypoints are displayed as triangle arrows on the map. The arrow points in the direction the drone will be facing (heading).
+                </div>
+            </section>
+
+            <section id="advanced-features">
+                <h2>4. Advanced Features</h2>
+
+                <h3>Flight Settings</h3>
+                <p>Configure your flight parameters in the Advanced Settings panel:</p>
+                <ul>
+                    <li><strong>Altitude</strong>: Flight altitude in meters</li>
+                    <li><strong>Speed</strong>: Flight speed in m/s</li>
+                    <li><strong>Gimbal Angle</strong>: Camera angle (-90° to 30°)</li>
+                    <li><strong>Path Spacing</strong>: Distance between parallel flight lines (for area coverage)</li>
+                    <li><strong>Image Overlap</strong>: Forward and side overlap percentages for photogrammetry</li>
+                    <li><strong>Line Orientation</strong>: Rotation angle for flight paths</li>
+                </ul>
+
+                <h3>Waypoint Actions</h3>
+                <p>Add actions to waypoints for automated operations:</p>
+                <ul>
+                    <li><strong>Take Photo</strong>: Capture an image at the waypoint</li>
+                    <li><strong>Start Record</strong>: Begin video recording</li>
+                    <li><strong>Stop Record</strong>: End video recording</li>
+                    <li><strong>Rotate Gimbal</strong>: Adjust camera angle</li>
+                </ul>
+
+                <div class="tip-box">
+                    Enable "Auto Take Photo at All Waypoints" in Advanced Settings to automatically add photo actions to all waypoints.
+                </div>
+
+                <h3>Mission Splitting</h3>
+                <p>For large missions, use the "Split Mission" feature to divide your flight plan into smaller, manageable parts:</p>
+                <ol>
+                    <li>Create your complete flight plan with all waypoints</li>
+                    <li>Click "Split Mission" in the toolbar</li>
+                    <li>Set the number of waypoints per mission (recommended values are shown)</li>
+                    <li>Click "Split & Export All" to generate multiple KMZ files</li>
+                </ol>
+            </section>
+
+            <section id="presets">
+                <h2>5. Flight Presets</h2>
+                <p>Quickly configure your flight settings using preset configurations optimized for different mission types:</p>
+
+                <div class="preset-grid">
+                    <div class="preset-card">
+                        <h4>📦 3D Modeling</h4>
+                        <p>High overlap (80%), lower altitude (40m), slower speed (4 m/s), tight spacing (15m). Optimized for 3D reconstruction.</p>
+                    </div>
+                    <div class="preset-card">
+                        <h4>🗺️ Mapping</h4>
+                        <p>Medium overlap (70%), medium altitude (60m), medium speed (6 m/s), standard spacing (25m). For general mapping.</p>
+                    </div>
+                    <div class="preset-card">
+                        <h4>📡 Scanning</h4>
+                        <p>High overlap (75%), dynamic altitude enabled, reverse points. For terrain following and detailed scanning.</p>
+                    </div>
+                    <div class="preset-card">
+                        <h4>👁️ Inspection</h4>
+                        <p>Lower altitude (30m), slow speed (3 m/s), tight spacing (10m), angled gimbal (-45°). For close inspection work.</p>
+                    </div>
+                </div>
+
+                <p>Click any preset button to automatically apply its settings. You can still customize individual settings afterward.</p>
+            </section>
+
+            <section id="drawing-tools">
+                <h2>6. Drawing Tools</h2>
+                <p>The Drawing Tools panel (top-right of the map) provides several modes for creating flight plans:</p>
+
+                <h3>Cursor Mode</h3>
+                <p>Navigate the map without adding waypoints. Use this mode to explore the map and find locations.</p>
+
+                <h3>Waypoints Mode</h3>
+                <p>Click on the map to add individual waypoints. This is the default mode for manual waypoint creation.</p>
+
+                <h3>Rectangle Tool</h3>
+                <p>Draw a rectangle on the map to define an area. After drawing, click "Generate Waypoints" to automatically create a grid of waypoints covering the area.</p>
+
+                <h3>Polygon Tool</h3>
+                <p>Draw a custom polygon shape to define an irregular area. Click points to create the polygon, then double-click to finish. Click "Generate Waypoints" to create waypoints within the polygon.</p>
+
+                <h3>POI (Point of Interest) Tool</h3>
+                <p>Draw a circle around a point of interest. The application will generate waypoints around the circle's perimeter, all facing the center. Perfect for 360° inspection or mapping around a specific location.</p>
+
+                <div class="tip-box">
+                    After using Rectangle, Polygon, or POI tools, you'll see a confirmation panel. Review the generated area (shown in light blue) and click "Generate Waypoints" to create the flight path.
+                </div>
+
+                <div class="warning-box">
+                    The Drawing Tools panel can be collapsed/expanded using the arrow button. Make sure it's visible when you want to use drawing tools.
+                </div>
+            </section>
+
+            <section id="import-export">
+                <h2>7. Import & Export</h2>
+
+                <h3>Export Options</h3>
+                <ul>
+                    <li><strong>Save</strong>: Save your flight plan as a JSON file for later editing</li>
+                    <li><strong>Export KMZ</strong>: Export as KMZ file for use with DJI apps or Google Earth</li>
+                </ul>
+
+                <h3>Import Options</h3>
+                <p>The "Import" button supports multiple file formats:</p>
+                <ul>
+                    <li><strong>KMZ Files</strong>: Import existing flight plans with waypoints</li>
+                    <li><strong>KML Files</strong>: Import polygon data and automatically generate waypoints</li>
+                    <li><strong>WGS84 Files</strong>: Import coordinate data and generate polygon-based flight plans</li>
+                </ul>
+
+                <h4>WGS84 File Format</h4>
+                <p>WGS84 files should contain coordinate pairs, one per line. Supported formats:</p>
+                <div class="code-block">
+# Comments start with #
+# Format 1: lat,lon
+40.7128,-74.0060
+40.7130,-74.0058
+
+# Format 2: lon,lat
+-74.0060,40.7128
+-74.0058,40.7130
+
+# Format 3: space-separated
+40.7128 -74.0060
+40.7130 -74.0058
+                </div>
+            </section>
+
+            <section id="tips">
+                <h2>8. Tips & Best Practices</h2>
+
+                <h3>Flight Planning Tips</h3>
+                <ul>
+                    <li><strong>Start with presets</strong>: Use the preset configurations as a starting point, then fine-tune for your specific needs</li>
+                    <li><strong>Check regulations</strong>: Always verify local drone regulations and flight restrictions before planning</li>
+                    <li><strong>Weather considerations</strong>: Account for wind speed and weather conditions in your flight planning</li>
+                    <li><strong>Battery life</strong>: Consider battery capacity when planning long missions - use mission splitting for large areas</li>
+                </ul>
+
+                <h3>Photogrammetry Best Practices</h3>
+                <ul>
+                    <li><strong>Overlap</strong>: Maintain 70-80% overlap for best 3D reconstruction results</li>
+                    <li><strong>Altitude</strong>: Lower altitudes provide higher resolution but require more waypoints</li>
+                    <li><strong>Path spacing</strong>: Should match your camera's field of view and desired overlap</li>
+                    <li><strong>Consistent speed</strong>: Maintain constant speed for uniform image spacing</li>
+                </ul>
+
+                <h3>Keyboard Shortcuts</h3>
+                <ul>
+                    <li><strong>Delete / Backspace</strong>: Delete selected waypoint</li>
+                    <li><strong>Right-click + Drag</strong>: Move waypoint on map</li>
+                </ul>
+
+                <h3>Map Styles</h3>
+                <p>Switch between different map styles using the map style selector (bottom-left of the map):</p>
+                <ul>
+                    <li><strong>Dark</strong>: Starlink-like dark theme (default)</li>
+                    <li><strong>Satellite</strong>: Satellite imagery</li>
+                    <li><strong>Terrain</strong>: Topographic map with elevation</li>
+                    <li><strong>Light</strong>: Light theme map</li>
+                    <li><strong>OpenStreetMap</strong>: Standard OSM tiles</li>
+                </ul>
+            </section>
+
+            <section id="faq">
+                <h2>9. Frequently Asked Questions</h2>
+
+                <h3>Q: How do I change the map style?</h3>
+                <p>A: Click the map style button in the bottom-left corner of the map and select your preferred style from the dropdown menu.</p>
+
+                <h3>Q: Can I edit waypoints after generating them from a polygon?</h3>
+                <p>A: Yes! All generated waypoints can be edited individually. Select a waypoint from the list or click it on the map to edit its properties.</p>
+
+                <h3>Q: What's the difference between Cursor and Waypoints mode?</h3>
+                <p>A: Cursor mode allows you to navigate the map without adding waypoints. Waypoints mode lets you click to add waypoints.</p>
+
+                <h3>Q: How do I move a waypoint?</h3>
+                <p>A: Right-click on a waypoint marker on the map and drag it to the new position. The coordinates will update automatically.</p>
+
+                <h3>Q: Can I use this with DJI Fly or DJI Pilot apps?</h3>
+                <p>A: Yes! Export your flight plan as KMZ and import it into DJI apps. Make sure to check compatibility with your specific DJI app version.</p>
+
+                <h3>Q: What file formats are supported for import?</h3>
+                <p>A: The application supports KMZ (flight plans), KML (polygon data), and WGS84 (coordinate files) formats.</p>
+
+                <h3>Q: How do I split a large mission?</h3>
+                <p>A: Use the "Split Mission" button in the toolbar. Set the number of waypoints per mission, and the application will create multiple KMZ files automatically.</p>
+
+                <h3>Q: What does "Auto Take Photo" do?</h3>
+                <p>A: When enabled, this setting automatically adds a "Take Photo" action to all waypoints, ensuring consistent image capture throughout your mission.</p>
+            </section>
+
+            <section>
+                <h2>10. Support</h2>
+                <p>For additional support, bug reports, or feature requests, please visit the project repository on GitHub.</p>
+                <p>Remember to always follow local drone regulations and fly safely!</p>
+            </section>
+        </div>
+    </div>
+
+    <a href="#" class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑</a>
+
+    <footer>
+        <p>&copy; 2024 Waypoint Planner. All rights reserved.</p>
+        <p>Fly safely and responsibly. Always comply with local drone regulations.</p>
+    </footer>
+</body>
+</html>
+
